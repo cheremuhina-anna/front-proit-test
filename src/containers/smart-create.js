@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux'
 
-import { postOrgAPI, putOrgAPI, fetchListOrg } from '../actions/orgAction'
+import { postOrgAPI, putOrgAPI, fetchCountAndListOrg } from '../actions/orgAction'
 import { postEmplAPI, putEmplAPI, getListEmplOrg, fetchListEmpl } from '../actions/emplAction'
 
 import CreateOrganization from '../components/create_element'
@@ -62,7 +62,7 @@ class SmartCreate extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return {
-        fetchDataOrg: () => dispatch(fetchListOrg()),
+        fetchDataOrg: () => dispatch(fetchCountAndListOrg()),
         postDataOrg: (data) => dispatch(postOrgAPI(data)),
         putDataOrg: (data) => dispatch(putOrgAPI(data)),
 

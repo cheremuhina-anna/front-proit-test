@@ -8,18 +8,26 @@ const Organization = {
     countEmpl: 0
   }
 
-export const fetchListOrgSuccess = (listOrg) => {
+export const fetchListOrgSuccess = (countAndListOrg) => {
     return {
         type: 'FETCH_LIST_ORGANIZATIONS',
-        payload: listOrg
+        payload: countAndListOrg
     }
 }
 
-export const fetchListOrg = () =>{
+export const fetchCountAndListOrg = () =>{
     return (dispatch) => {
-        OrgService.getListOrg()
+        OrgService.getCountAndListOrg()
         .then(response => response.data)
         .then(result => dispatch(fetchListOrgSuccess(result)))
+    }
+}
+
+export const fetchPageListOrg = () =>{
+    return (dispatch) => {
+        OrgService.getPageListOrg()
+            .then(response => response.data)
+            .then(result => dispatch(fetchListOrgSuccess(result)))
     }
 }
 
@@ -76,7 +84,7 @@ export const deleteOrgAPI = (id) => {
 export const deleteOrg = (isDelete) => {
     if(isDelete)
         return(dispatch) => {
-            dispatch(fetchListOrg())
+            dispatch(fetchCountAndListOrg())
         }
     else
         alert('Элемент не может быть удален, так как имеет дочерние элементы')

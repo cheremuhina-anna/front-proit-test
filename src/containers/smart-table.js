@@ -2,10 +2,11 @@ import React from "react";
 import { connect } from 'react-redux'
 // import { bindActionCreators } from "redux";
 
-import { fetchListOrg, selectOrg, deleteOrgAPI, fetchFilterList } from '../actions/orgAction'
+import { fetchCountAndListOrg, selectOrg, deleteOrgAPI, fetchFilterList } from '../actions/orgAction'
 import { fetchListEmpl, selectEmpl, deleteEmplAPI } from '../actions/emplAction'
 
 import Table from '../components/table'
+import Pagination from '../components/pagination'
 
 const thListOrg = {
     capt:'организаций', 
@@ -23,25 +24,27 @@ const thListEmpl = {
 
 class SmartTable extends React.Component {
 
+    //получить список организаций до создания компонента
     componentWillMount() {
         this.props.fetchDataOrg()
         if(!this.props.isOrg)
             this.props.fetchDataEmpl()
     }
 
-
-
     render() {
         if(this.props.isOrg)
             return(
-                <Table
-                    thList = {thListOrg}
-                    list = {this.props.orgList} 
-                    select = {this.props.selectOrg}
-                    delete = {this.props.deleteDataOrg}
-                    isDelete = {this.props.isDeleteOrg}
-                    fetchList = {this.props.fetchDataOrg}
-                    fetchFilterList = {this.props.fetchFilterList}/>
+                <div>
+                    <Table
+                        thList = {thListOrg}
+                        list = {this.props.orgList}
+                        select = {this.props.selectOrg}
+                        delete = {this.props.deleteDataOrg}
+                        isDelete = {this.props.isDeleteOrg}
+                        fetchList = {this.props.fetchDataOrg}
+                        fetchFilterList = {this.props.fetchFilterList}/>
+                    <Pagination countOrg = {this.props.countOrg}/>
+                </div>
             );
         else
             return(
@@ -58,7 +61,7 @@ class SmartTable extends React.Component {
 
 function matchDispatchToProps(dispatch) {
     return { 
-        fetchDataOrg: () => dispatch(fetchListOrg()),
+        fetchDataOrg: () => dispatch(fetchCountAndListOrg()),
         selectOrg: (org) => dispatch(selectOrg(org)),
         deleteDataOrg: (data) => dispatch(deleteOrgAPI(data)),
         fetchFilterList: (filter, list) => dispatch(fetchFilterList(filter, list)),
@@ -71,7 +74,8 @@ function matchDispatchToProps(dispatch) {
 
 function mapStateToProps(state){
     return{
-        orgList: state.organizations,
+        countOrg: state.organizations.countOrg,
+        orgList: state.organizations.orgListOnPage,
         org: state.org,
         isDeleteOrg: state.isActionOrganization,
 

@@ -6,7 +6,12 @@ const Organization = {
   countEmpl: 0
 }
 
-export function organizations(state = [], action) {
+const Page = {
+  cuntOrg: 0,
+  orgListOnPage: []
+}
+
+export function organizations(state=Page, action) {
     switch (action.type) {
       case 'FETCH_LIST_ORGANIZATIONS':
         return action.payload
