@@ -24,6 +24,21 @@ export const fetchPageListEmpl = (offset, limit) =>{
     }
 }
 
+export const fetchTreeEmpl = () =>{
+    return (dispatch) =>{
+        EmplService.getTree()
+            .then(response => response.data)
+            .then(result => dispatch(fetchTreeEmplSuccess(result)))
+    }
+}
+
+export const fetchTreeEmplSuccess = (treeList) => {
+    return {
+        type: 'FETCH_TREE_EMPLOYEES',
+        payload: treeList
+    }
+}
+
 // export const fetchListEmplSuccess = (listEmpl) => {
 //     return {
 //         type: 'FETCH_LIST_EMPLOYEES',

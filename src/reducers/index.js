@@ -3,7 +3,7 @@ import {combineReducers} from 'redux'
 // import EmplReducer from './employee'
 
 import { pageOrganizations, treeOrganizations, organizations, org, isActionOrganization } from './organization'
-import { pageEmployees, employees, empl, isActionEmployee } from './employee'
+import { pageEmployees, treeEmployees, employees, empl, isActionEmployee } from './employee'
 
 export default combineReducers({
     pageOrganizations,
@@ -12,6 +12,7 @@ export default combineReducers({
     org,
     isActionOrganization,
     pageEmployees,
+    treeEmployees,
     employees,
     empl,
     isActionEmployee

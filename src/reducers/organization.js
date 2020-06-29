@@ -22,8 +22,8 @@ export function pageOrganizations(state=Page, action) {
 
 export function treeOrganizations(state=[], action) {
   switch (action.type) {
-    case 'FETCH_ROOTS_ORGANIZATIONS':
-      return action.payload
+    case 'FETCH_TREE_ORGANIZATIONS':
+      return action.payload;
     default:
       return state
   }
@@ -32,7 +32,7 @@ export function treeOrganizations(state=[], action) {
 export function organizations(state = [], action) {
   switch (action.type) {
     case 'FETCH_LIST_ORGANIZATIONS':
-      return action.payload
+      return action.payload;
     default:
       return state
   }
@@ -41,13 +41,13 @@ export function organizations(state = [], action) {
 export function org(state = Organization, action) {
   switch (action.type) {
     case 'SELECT_ORGANIZATION':
-      return action.payload
+      return action.payload;
     case 'CREATE_ORGANIZATION':
-      return action.payload
+      return action.payload;
     case 'CHANGE_ORGANIZATION':
-      return action.payload
+      return action.payload;
     case 'CLEAR_ORGANIZATION':
-      return action.payload
+      return action.payload;
     default:
       return state
   }
@@ -56,7 +56,7 @@ export function org(state = Organization, action) {
 export function isActionOrganization(state = false, action) {
   switch(action.type) {
     case 'DELETE_ORGANIZATION':
-      return action.payload
+      return action.payload;
     default:
       return state
   }

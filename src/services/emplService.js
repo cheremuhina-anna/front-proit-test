@@ -1,4 +1,4 @@
-import { apiEmpl } from "."
+import {apiEmpl} from "."
 
 class EmplService {
     // getListEmpl = () => {
@@ -11,6 +11,10 @@ class EmplService {
                 offset: offset,
                 limit: limit
             }});
+    };
+
+    getTree = () => {
+        return apiEmpl.get('/tree')
     }
 
     getListEmplOrg = (idOrg) => {

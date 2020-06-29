@@ -39,7 +39,10 @@ class App extends React.Component {
               </Route>
           </Route>
           <Route path='/organization/tree'>
-            <TreeView/>
+            <TreeView isOrg={true}/>
+          </Route>
+          <Route path='/employee/tree'>
+            <TreeView isOrg={false}/>
           </Route>
           <Route path='/organization/create'>
             <SmartCreate isOrg={true} isCreate={true}/>

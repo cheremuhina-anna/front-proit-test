@@ -2,38 +2,45 @@ import React from "react";
 
 import "../styles/sTree.css"
 
-class TreeView extends React.Component {
+class Node extends React.Component{
 
-function() {
-        var ul = document.querySelectorAll('.treeCSS > li:not(:only-child) ul, .treeCSS ul ul');
-        for (var i = 0; i < ul.length; i++) {
-            var div = document.createElement('div');
-            div.className = 'drop';
-            div.innerHTML = '+'; // картинки лучше выравниваются, т.к. символы на одном браузере ровно выглядят, на другом — чуть съезжают
-            ul[i].parentNode.insertBefore(div, ul[i].previousSibling);
-            div.onclick = function() {
-                this.innerHTML = (this.innerHTML == '+' ? '−' : '+');
-                this.className = (this.className == 'drop' ? 'drop dropM' : 'drop');
-            }
-        }
-    };
+    handleOpenListChild = (event) => {
+        let div = document.getElementById(event.target.id);
+        div.innerHTML = (div.innerHTML === '+' ? '−' : '+');
+        div.className = (div.className === 'drop' ? 'drop dropM' : 'drop');
+    }
+
+    render() {
+        if (this.props.item.subItems.length > 0)
+            return (
+                <li>
+                    <div id={this.props.item.value.id} className='drop'
+                         onClick={this.handleOpenListChild}>
+                        +
+                    </div>
+                    {this.props.item.value.name}
+                    <ul id={"ul-" + this.props.item.value.id}>
+                        {this.props.item.subItems.map(sub=>
+                            <Node item = {sub}/>
+                        )}
+                    </ul>
+                </li>
+            );
+        else
+            return (
+                <li>{this.props.item.value.name}</li>
+            );
+    }
+}
+
+class TreeView extends React.Component {
 
     render() {
         return (
             <ul className="treeCSS">
-                {this.props.roots.map(item => {
-                    return (
-                        <li>{item.name}</li>
-                    );
-                })}
-                <li>Блог
-                    <ul>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JavaScript</li>
-                    </ul>
-                </li>
-                <li>Контакты</li>
+                {this.props.tree.map(node =>
+                    <Node item = {node}/>
+                )}
             </ul>
         );
     }

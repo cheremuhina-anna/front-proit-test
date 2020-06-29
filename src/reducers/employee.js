@@ -21,6 +21,15 @@ export function pageEmployees(state = Page, action) {
     }
 }
 
+export function treeEmployees(state=[], action) {
+    switch (action.type) {
+        case 'FETCH_TREE_EMPLOYEES':
+            return action.payload;
+        default:
+            return state
+    }
+}
+
 export function employees(state = [], action) {
     switch (action.type) {
         // case 'FETCH_LIST_EMPLOYEES':

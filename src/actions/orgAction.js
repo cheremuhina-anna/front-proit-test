@@ -38,18 +38,18 @@ export const fetchListOrg = () =>{
     }
 }
 
-export const fetchRoots = () =>{
+export const fetchTreeOrg = () =>{
     return (dispatch) =>{
-        OrgService.getRoots()
+        OrgService.getTree()
             .then(response => response.data)
-            .then(result => dispatch(fetchRootsOrgSuccess(result)))
+            .then(result => dispatch(fetchTreeOrgSuccess(result)))
     }
 }
 
-export const fetchRootsOrgSuccess = (listRoots) => {
+export const fetchTreeOrgSuccess = (treeList) => {
     return {
-        type: 'FETCH_ROOTS_ORGANIZATIONS',
-        payload: listRoots
+        type: 'FETCH_TREE_ORGANIZATIONS',
+        payload: treeList
     }
 }
 
