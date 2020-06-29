@@ -9,20 +9,35 @@ const Employee = {
     nameHeadempl: ''
   }
 
-export const fetchListEmplSuccess = (listEmpl) => {
+export const fetchPageEmplSuccess = (countAndListEmpl) => {
     return {
-        type: 'FETCH_LIST_EMPLOYEES',
-        payload: listEmpl
+        type: 'FETCH_PAGE_EMPLOYEES',
+        payload: countAndListEmpl
     }
 }
 
-export const fetchListEmpl = () =>{
+export const fetchPageListEmpl = (offset, limit) =>{
     return (dispatch) => {
-        EmplService.getListEmpl()
-        .then(response => response.data)
-        .then(result => dispatch(fetchListEmplSuccess(result)))
+        EmplService.getPageEmpl(offset, limit)
+            .then(response => response.data)
+            .then(result => dispatch(fetchPageEmplSuccess(result)))
     }
 }
+
+// export const fetchListEmplSuccess = (listEmpl) => {
+//     return {
+//         type: 'FETCH_LIST_EMPLOYEES',
+//         payload: listEmpl
+//     }
+// }
+//
+// export const fetchListEmpl = () =>{
+//     return (dispatch) => {
+//         EmplService.getListEmpl()
+//         .then(response => response.data)
+//         .then(result => dispatch(fetchListEmplSuccess(result)))
+//     }
+// }
 
 export const createEmpl = (empl) => {
     return {
@@ -77,25 +92,25 @@ export const getListEmplOrg = (idOrg) =>{
     }
 }
 
-export const deleteEmplAPI = (id) => {
+export const deleteEmplAPI = (id, offset, limit) => {
     return(dispatch) => {
         EmplService.deleteEmpl(id)
-        .then(response => response.data)
-        .then(result => dispatch(deleteEmpl(result)))
+            .then(response => response.data)
+            .then(result => dispatch(deleteEmpl(result, offset, limit)))
     }
 }
 
-export const deleteEmpl = (isDelete) => {
+export const deleteEmpl = (isDelete, offset, limit) => {
     if(isDelete)
         return(dispatch) => {
-            dispatch(fetchListEmpl())
+            dispatch(fetchPageListEmpl(offset, limit))
         }
     else
         alert('Элемент не может быть удален, так как имеет дочерние элементы')
-        return {
-            type: 'DELETE_EMPLOYEE',
-            payload: isDelete
-        }
+    return {
+        type: 'DELETE_EMPLOYEE',
+        payload: isDelete
+    }
 }
 
 export const clearOrg = () => {

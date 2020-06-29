@@ -1,17 +1,21 @@
 import { apiOrg } from "."
 
 class OrgService {
-    getCountAndListOrg = () => {
-        return apiOrg.get()
+    getListOrg = () => {
+        return apiOrg.get('/create')
     };
 
-    getPageListOrg = (page, limit) => {
+    getPageListOrg = (offset, limit) => {
         return apiOrg.get('/',{
             params: {
-                page: page,
+                offset: offset,
                 limit: limit
             }});
     };
+
+    getRoots = () => {
+        return apiOrg.get('/tree')
+    }
 
     postOrg = (data) => {
         return apiOrg.post('/create', data)

@@ -1,9 +1,17 @@
 import { apiEmpl } from "."
 
 class EmplService {
-    getListEmpl = () => {
-        return apiEmpl.get()
-    };
+    // getListEmpl = () => {
+    //     return apiEmpl.get()
+    // };
+
+    getPageEmpl = (offset, limit) => {
+        return apiEmpl.get( '/', {
+            params: {
+                offset: offset,
+                limit: limit
+            }});
+    }
 
     getListEmplOrg = (idOrg) => {
         return apiEmpl.get('/create', {

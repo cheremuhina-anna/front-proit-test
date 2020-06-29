@@ -7,18 +7,36 @@ const Organization = {
 }
 
 const Page = {
-  cuntOrg: 0,
-  orgListOnPage: []
+  countOrgs: 0,
+  listOnPage: []
 }
 
-export function organizations(state=Page, action) {
-    switch (action.type) {
-      case 'FETCH_LIST_ORGANIZATIONS':
-        return action.payload
-      default:
-        return state
-    }
+export function pageOrganizations(state=Page, action) {
+  switch (action.type) {
+    case 'FETCH_PAGE_ORGANIZATIONS':
+      return action.payload
+    default:
+      return state
   }
+}
+
+export function treeOrganizations(state=[], action) {
+  switch (action.type) {
+    case 'FETCH_ROOTS_ORGANIZATIONS':
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function organizations(state = [], action) {
+  switch (action.type) {
+    case 'FETCH_LIST_ORGANIZATIONS':
+      return action.payload
+    default:
+      return state
+  }
+}
 
 export function org(state = Organization, action) {
   switch (action.type) {
@@ -30,7 +48,7 @@ export function org(state = Organization, action) {
       return action.payload
     case 'CLEAR_ORGANIZATION':
       return action.payload
-    default: 
+    default:
       return state
   }
 }
@@ -39,7 +57,7 @@ export function isActionOrganization(state = false, action) {
   switch(action.type) {
     case 'DELETE_ORGANIZATION':
       return action.payload
-    default: 
+    default:
       return state
   }
 }

@@ -8,26 +8,48 @@ const Organization = {
     countEmpl: 0
   }
 
-export const fetchListOrgSuccess = (countAndListOrg) => {
+export const fetchPageOrgSuccess = (countAndListOrg) => {
     return {
-        type: 'FETCH_LIST_ORGANIZATIONS',
+        type: 'FETCH_PAGE_ORGANIZATIONS',
         payload: countAndListOrg
     }
 }
 
-export const fetchCountAndListOrg = () =>{
+export const fetchPageListOrg = (offset, limit) =>{
     return (dispatch) => {
-        OrgService.getCountAndListOrg()
-        .then(response => response.data)
-        .then(result => dispatch(fetchListOrgSuccess(result)))
+        OrgService.getPageListOrg(offset, limit)
+            .then(response => response.data)
+            .then(result => dispatch(fetchPageOrgSuccess(result)))
     }
 }
 
-export const fetchPageListOrg = () =>{
+export const fetchListOrgSuccess = (listOrg) => {
+    return {
+        type: 'FETCH_LIST_ORGANIZATIONS',
+        payload: listOrg
+    }
+}
+
+export const fetchListOrg = () =>{
     return (dispatch) => {
-        OrgService.getPageListOrg()
+        OrgService.getListOrg()
             .then(response => response.data)
             .then(result => dispatch(fetchListOrgSuccess(result)))
+    }
+}
+
+export const fetchRoots = () =>{
+    return (dispatch) =>{
+        OrgService.getRoots()
+            .then(response => response.data)
+            .then(result => dispatch(fetchRootsOrgSuccess(result)))
+    }
+}
+
+export const fetchRootsOrgSuccess = (listRoots) => {
+    return {
+        type: 'FETCH_ROOTS_ORGANIZATIONS',
+        payload: listRoots
     }
 }
 
@@ -73,25 +95,25 @@ export const selectOrg = (org) => {
     }
 }
 
-export const deleteOrgAPI = (id) => {
+export const deleteOrgAPI = (id, offset, limit) => {
     return(dispatch) => {
         OrgService.deleteOrg(id)
-        .then(response => response.data)
-        .then(result => dispatch(deleteOrg(result)))
+            .then(response => response.data)
+            .then(result => dispatch(deleteOrg(result, offset, limit)))
     }
 }
 
-export const deleteOrg = (isDelete) => {
+export const deleteOrg = (isDelete, offset, limit) => {
     if(isDelete)
         return(dispatch) => {
-            dispatch(fetchCountAndListOrg())
+            dispatch(fetchPageListOrg(offset,limit))
         }
     else
         alert('Элемент не может быть удален, так как имеет дочерние элементы')
-        return {
-            type: 'DELETE_ORGANIZATION',
-            payload: isDelete
-        }
+    return {
+        type: 'DELETE_ORGANIZATION',
+        payload: isDelete
+    }
 }
 
 export const clearOrg = () => {

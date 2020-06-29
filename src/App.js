@@ -7,6 +7,7 @@ import Header from "./components/header"
 import HeadBody from "./components/head_body"
 import Table from "./containers/smart-table"
 import SmartCreate from "./containers/smart-create"
+import TreeView from "./containers/smart-tree";
 //  import CreateEmpl from "./components/createEmpl"
 
 // import { fetchListOrg } from './actions/orgAction'
@@ -36,6 +37,9 @@ class App extends React.Component {
                 <Table isOrg={false}/>
                 {/* <Table requestAddress='http://localhost:54545/employee' capt='сотрудников' th1='ФИО' th2 = 'Организация' th3 ='Руководитель' /> */}
               </Route>
+          </Route>
+          <Route path='/organization/tree'>
+            <TreeView/>
           </Route>
           <Route path='/organization/create'>
             <SmartCreate isOrg={true} isCreate={true}/>

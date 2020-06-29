@@ -1,34 +1,58 @@
 import React from "react";
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ReactPaginate from "react-paginate";
 // import { bindActionCreators } from "redux";
 
-import { fetchCountAndListOrg, selectOrg, deleteOrgAPI, fetchFilterList } from '../actions/orgAction'
-import { fetchListEmpl, selectEmpl, deleteEmplAPI } from '../actions/emplAction'
+import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterList } from '../actions/orgAction'
+import { fetchPageListEmpl, selectEmpl, deleteEmplAPI } from '../actions/emplAction'
 
 import Table from '../components/table'
-import Pagination from '../components/pagination'
 
 const thListOrg = {
-    capt:'организаций', 
-    th1: 'Название организации', 
-    th2:'Головная организация', 
+    capt:'организаций',
+    th1: 'Название организации',
+    th2:'Головная организация',
     th3:'Количество сотрудников'
 }
 
 const thListEmpl = {
-    capt: 'сотрудников', 
+    capt: 'сотрудников',
     th1: 'ФИО',
-    th2: 'Организация', 
+    th2: 'Организация',
     th3: 'Руководитель'
 }
 
 class SmartTable extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            offset: 0,
+            limit: 5,
+            currentPage: 0
+        }
+        this.handlePageClick = this.handlePageClick.bind(this);
+    }
 
-    //получить список организаций до создания компонента
+    handlePageClick = (e) => {
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.limit;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            if (this.props.isOrg)
+                this.props.fetchDataOrg(this.state.offset, this.state.limit)
+            else
+                this.props.fetchDataEmpl(this.state.offset, this.state.limit)
+        });
+
+    };
+
     componentWillMount() {
-        this.props.fetchDataOrg()
-        if(!this.props.isOrg)
-            this.props.fetchDataEmpl()
+        if (this.props.isOrg)
+            this.props.fetchDataOrg(this.state.offset, this.state.limit)
+        else
+            this.props.fetchDataEmpl(this.state.offset, this.state.limit)
     }
 
     render() {
@@ -37,48 +61,85 @@ class SmartTable extends React.Component {
                 <div>
                     <Table
                         thList = {thListOrg}
-                        list = {this.props.orgList}
+                        list = {this.props.pageOrganizations.listOnPage}
                         select = {this.props.selectOrg}
                         delete = {this.props.deleteDataOrg}
+                        offset = {this.state.offset}
+                        limit = {this.state.limit}
                         isDelete = {this.props.isDeleteOrg}
                         fetchList = {this.props.fetchDataOrg}
                         fetchFilterList = {this.props.fetchFilterList}/>
-                    <Pagination countOrg = {this.props.countOrg}/>
+                    <ReactPaginate
+                        previousLabel={"prev"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={Math.ceil(this.props.pageOrganizations.countOrgs / this.state.limit)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={"pagination"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}/>
+                    {/*<Pagination*/}
+                    {/*    count = {this.props.pageOrganizations.countOrgs}*/}
+                    {/*    fetchData = {this.props.fetchDataOrg}*/}
+                    {/*/>*/}
                 </div>
             );
         else
             return(
-                <Table
-                    thList = {thListEmpl}
-                    list = {this.props.emplList} 
-                    select = {this.props.selectEmpl}
-                    delete = {this.props.deleteDataEmpl}
-                    isDelete = {this.props.isDeleteEmpl}
-                    fetchList = {this.props.fetchDataEmpl}/>
+                <div>
+                    <Table
+                        thList = {thListEmpl}
+                        list = {this.props.pageEmployees.listOnPage}
+                        select = {this.props.selectEmpl}
+                        delete = {this.props.deleteDataEmpl}
+                        offset = {this.state.offset}
+                        limit = {this.state.limit}
+                        isDelete = {this.props.isDeleteEmpl}
+                        fetchList = {this.props.fetchDataEmpl}/>
+                    <ReactPaginate
+                        previousLabel={"prev"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={Math.ceil(this.props.pageEmployees.countEmpls / this.state.limit)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={"pagination"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}/>
+                    {/*<Pagination*/}
+                    {/*    count = {this.props.pageEmployees.countEmpls}*/}
+                    {/*    fetchData = {this.props.fetchDataEmpl}*/}
+                    {/*/>*/}
+                </div>
             );
     }
 }
 
 function matchDispatchToProps(dispatch) {
-    return { 
-        fetchDataOrg: () => dispatch(fetchCountAndListOrg()),
+    return {
+        fetchDataOrg: (offset, limit) => dispatch(fetchPageListOrg(offset, limit)),
         selectOrg: (org) => dispatch(selectOrg(org)),
-        deleteDataOrg: (data) => dispatch(deleteOrgAPI(data)),
+        deleteDataOrg: (data, offset, limit) => dispatch(deleteOrgAPI(data, offset, limit)),
         fetchFilterList: (filter, list) => dispatch(fetchFilterList(filter, list)),
 
-        fetchDataEmpl: () => dispatch(fetchListEmpl()),
+        fetchDataEmpl: (offset, limit) => dispatch(fetchPageListEmpl(offset, limit)),
         selectEmpl: (empl) => dispatch(selectEmpl(empl)),
-        deleteDataEmpl: (data) => dispatch(deleteEmplAPI(data)),
+        deleteDataEmpl: (data, offset, limit) => dispatch(deleteEmplAPI(data, offset, limit)),
     }
 }
 
 function mapStateToProps(state){
     return{
-        countOrg: state.organizations.countOrg,
-        orgList: state.organizations.orgListOnPage,
+        pageOrganizations: state.pageOrganizations,
         org: state.org,
         isDeleteOrg: state.isActionOrganization,
 
+        pageEmployees: state.pageEmployees,
         emplList: state.employees,
         empl: state.empl,
         isDeleteEmpl: state.isActionEmployee

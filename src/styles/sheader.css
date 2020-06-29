@@ -1,10 +1,9 @@
-nav {
+.headerCSS nav {
     margin: 0 auto;
     background-color: #5d4731;
-    
 }
 
-ul {
+.headerCSS ul {
     width: 100%;
     height: 30px;
     display: table;
@@ -15,12 +14,12 @@ ul {
     padding: 0;
 }
 
-li {
+.headerCSS li {
     display: table-cell;
     position: relative;
 }
 
-a {
+.headerCSS a {
     display: block;
     position: relative;
     width: 100%;
