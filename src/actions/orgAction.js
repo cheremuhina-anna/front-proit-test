@@ -30,6 +30,21 @@ export const fetchListOrgSuccess = (listOrg) => {
     }
 }
 
+export const fetchListOrgWithoutSub = (id_org) =>{
+    return (dispatch) => {
+        OrgService.getListOrgWithoutSub(id_org)
+            .then(response => response.data)
+            .then(result => dispatch(fetchListOrgWithoutSubSuccess(result)))
+    }
+}
+
+export const fetchListOrgWithoutSubSuccess = (listOrg) => {
+    return {
+        type: 'FETCH_LIST_ORG_WITHOUT_SUB_ORGS',
+        payload: listOrg
+    }
+}
+
 export const fetchListOrg = () =>{
     return (dispatch) => {
         OrgService.getListOrg()

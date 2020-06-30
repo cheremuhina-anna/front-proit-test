@@ -5,6 +5,14 @@ class OrgService {
         return apiOrg.get('/create')
     };
 
+    getListOrgWithoutSub = (id) => {
+        return apiOrg.get('/update', {
+            params: {
+                id_org: id
+            }
+        });
+    };
+
     getPageListOrg = (offset, limit) => {
         return apiOrg.get('/',{
             params: {

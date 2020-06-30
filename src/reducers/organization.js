@@ -33,6 +33,8 @@ export function organizations(state = [], action) {
   switch (action.type) {
     case 'FETCH_LIST_ORGANIZATIONS':
       return action.payload;
+    case 'FETCH_LIST_ORG_WITHOUT_SUB_ORGS':
+      return action.payload;
     default:
       return state
   }

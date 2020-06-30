@@ -39,6 +39,21 @@ export const fetchTreeEmplSuccess = (treeList) => {
     }
 }
 
+export const fetchListEmplWithoutSub = (idEmpl, idOrg) =>{
+    return (dispatch) => {
+        EmplService.getListEmplWithoutSub(idEmpl, idOrg)
+            .then(response => response.data)
+            .then(result => dispatch(fetchListEmplWithoutSubSuccess(result)))
+    }
+}
+
+export const fetchListEmplWithoutSubSuccess = (listEmpl) => {
+    return {
+        type: 'FETCH_LIST_EMPL_WITHOUT_SUB_EMPLS',
+        payload: listEmpl
+    }
+}
+
 // export const fetchListEmplSuccess = (listEmpl) => {
 //     return {
 //         type: 'FETCH_LIST_EMPLOYEES',

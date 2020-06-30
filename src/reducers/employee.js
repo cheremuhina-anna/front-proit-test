@@ -36,6 +36,8 @@ export function employees(state = [], action) {
         //   return action.payload
         case 'FETCH_LIST_EMPLOYEES_IN_ORG':
             return action.payload
+        case 'FETCH_LIST_EMPL_WITHOUT_SUB_EMPLS':
+            return action.payload;
         default:
             return state
     }

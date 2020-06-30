@@ -1,9 +1,6 @@
 import {apiEmpl} from "."
 
 class EmplService {
-    // getListEmpl = () => {
-    //     return apiEmpl.get()
-    // };
 
     getPageEmpl = (offset, limit) => {
         return apiEmpl.get( '/', {
@@ -17,6 +14,15 @@ class EmplService {
         return apiEmpl.get('/tree')
     }
 
+    getListEmplWithoutSub = (id_empl, id_org) => {
+        return apiEmpl.get('/update', {
+            params: {
+                id_empl: id_empl,
+                id_org: id_org
+            }
+        });
+    };
+
     getListEmplOrg = (idOrg) => {
         return apiEmpl.get('/create', {
             params: {
@@ -29,6 +35,7 @@ class EmplService {
     }
 
     putEmpl = (data) => {
+        alert(data.id+" "+data.name+" "+data.idOrg+" "+data.idHeadempl)
         return apiEmpl.put('/update', data)
     }
 
