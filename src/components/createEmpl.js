@@ -17,7 +17,6 @@ class Create extends React.Component {
     }
 
     handleSelectOrgChange = (event) => {
-        // let list = EmplService.getListEmplOrg(event.target.value)
         this.setState({ 
             empl: {...this.state.empl, idOrg: event.target.value} 
         });
@@ -34,11 +33,12 @@ class Create extends React.Component {
                 // <button onClick={() => this.props.handleFormSubmit({name: this.state.name, idHeadorg: this.state.idHeadorg})}>Добавить</button>
                 <button onClick={() => this.props.handleFormSubmit(this.state.empl)}>Добавить</button>
             )
-        else
-            return(
+        else {
+            return (
                 // <button onClick={() => this.props.handleFormSubmit({id: this.state.id, name: this.state.name, idHeadorg: this.state.idHeadorg})}>Изменить</button>
                 <button onClick={() => this.props.handleFormSubmit(this.state.empl)}>Изменить</button>
             )
+        }
     }
 
     render(){
@@ -47,7 +47,6 @@ class Create extends React.Component {
                 <label>
                     ФИО:
                     <input
-                        // value = {this.state.name}
                         value = {this.state.empl.name}
                         onChange = {this.handleInputChange} />
                 </label>

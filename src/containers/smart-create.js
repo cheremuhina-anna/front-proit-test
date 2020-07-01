@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux'
 
 import { postOrgAPI, putOrgAPI, fetchListOrg, fetchListOrgWithoutSub } from '../actions/orgAction'
-import {postEmplAPI, putEmplAPI, getListEmplOrg, fetchListEmplWithoutSub} from '../actions/emplAction'
+import {postEmplAPI, putEmplAPI, getListEmplOrg, fetchListEmplWithoutSub, clearEmpl} from '../actions/emplAction'
 
 import CreateOrganization from '../components/create_element'
 import CreateEmployee from '../components/createEmpl'
@@ -12,15 +12,12 @@ class SmartCreate extends React.Component {
     componentWillMount() {
         if (this.props.isCreate) {
             this.props.fetchDataOrg()
-            // if(!this.props.isOrg)
-            //     this.props.fetchDataEmpl()
         } else {
             if(this.props.isOrg)
                 this.props.fetchListOrgWithoutSubOrg(this.props.org.id)
             else {
                 this.props.fetchDataOrg()
                 this.props.fetchListEmplWithoutSubEmpl(this.props.empl.id, this.props.empl.idOrg)
-                // this.props.fetchDataEmplOrg(this.props.empl.idOrg)
             }
         }
     }
@@ -63,7 +60,8 @@ class SmartCreate extends React.Component {
                         listOrg = {this.props.organizations}
                         listEmpl = {this.props.emplList}
                         handleFormSubmit = {this.props.putDataEmpl}
-                        fetchEmplOrg = {this.props.fetchDataEmplOrg}/>
+                        fetchEmplOrg = {this.props.fetchDataEmplOrg}
+                    />
                 );
             default:
         }
@@ -82,6 +80,7 @@ function matchDispatchToProps(dispatch) {
         putDataEmpl: (data) => dispatch(putEmplAPI(data)),
         fetchDataEmplOrg: (idOrg) => dispatch(getListEmplOrg(idOrg)),
         fetchListEmplWithoutSubEmpl: (idEmpl, idOrg) => dispatch(fetchListEmplWithoutSub(idEmpl, idOrg)),
+        clearEmpl: () => clearEmpl()
     }
 }
 

@@ -35,7 +35,6 @@ class EmplService {
     }
 
     putEmpl = (data) => {
-        alert(data.id+" "+data.name+" "+data.idOrg+" "+data.idHeadempl)
         return apiEmpl.put('/update', data)
     }
 

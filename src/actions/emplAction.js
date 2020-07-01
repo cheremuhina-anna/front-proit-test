@@ -143,9 +143,9 @@ export const deleteEmpl = (isDelete, offset, limit) => {
     }
 }
 
-export const clearOrg = () => {
+export const clearEmpl = () => {
     return {
-        type: 'CLEAR_ORGANIZATION',
+        type: 'CLEAR_EMPLOYEE',
         payload: Employee
     }
 }

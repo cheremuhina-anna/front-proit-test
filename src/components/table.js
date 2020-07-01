@@ -21,14 +21,18 @@ function UseButtonUpdate({
 }
 
 function ButtonDelete({
-                        id, offset, limit,
+                        id, offset, limit, countEmpl,
                         deleteElement = () => {},
                         isDel
                       }){
 
   function handleClick() {
-    deleteElement(id, offset, limit)
-    // isDel ? alert('yes') : alert('Выбранный элемент не может быть удален, так как есть дочерние элементы')
+      var canDelete = true;
+     if (countEmpl !== null)
+         if (countEmpl > 0)
+            canDelete = window.confirm("В организации работают сотрудники. При удалении организации, сотрудники также будут удалены. " +
+         "Вы действительно хотите удалить выбранную организацию?");
+     if (canDelete) deleteElement(id, offset, limit)
   }
 
   return(
@@ -84,7 +88,7 @@ class Table extends React.Component {
                     <td>{'countEmpl' in item? item.countEmpl: item.nameHeadempl}</td>
                     <td>
                       <UseButtonUpdate select = {this.props.select} element={item}/>
-                      <ButtonDelete id = {item.id} offset={this.props.offset} limit={this.props.limit} deleteElement = {this.props.delete} isDel = {this.props.isDelete}/>
+                      <ButtonDelete id = {item.id} offset={this.props.offset} limit={this.props.limit} countEmpl = {'countEmpl' in item? item.countEmpl: null}  deleteElement = {this.props.delete} isDel = {this.props.isDelete}/>
                     </td>
                   </tr>
               );})
