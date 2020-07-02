@@ -1,24 +1,14 @@
 import React from "react";
-// import { connect } from 'react-redux'
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import Header from "./components/header"
 import Body from "./containers/smart-body"
 import SmartCreate from "./containers/smart-create"
 import TreeView from "./containers/smart-tree";
-//  import CreateEmpl from "./components/createEmpl"
 
-// import { fetchListOrg } from './actions/orgAction'
-
-
-//import Create from "./components/create_element"
 
 class App extends React.Component {
-
-  // componentWillMount() {
-  //   this.props.fetchData()
-  // }
 
   render() {
     return (
@@ -28,11 +18,9 @@ class App extends React.Component {
           <Route>              
               <Route exact path="/organization">
                 <Body isOrg={true}/>
-                {/* <Table requestAddress='http://localhost:54545/organization' capt='организаций' th1='Название организации' th2='Головная организация' th3='Количество сотрудников' />  */}
               </Route>
               <Route exact path="/employee">
                 <Body isOrg={false}/>
-                {/* <Table requestAddress='http://localhost:54545/employee' capt='сотрудников' th1='ФИО' th2 = 'Организация' th3 ='Руководитель' /> */}
               </Route>
           </Route>
           <Route path='/organization/tree'>
@@ -59,16 +47,4 @@ class App extends React.Component {
   }
 }
 
-// function matchDispatchToProps(dispatch) {
-//   return { fetchData: () => dispatch(fetchListOrg())
-//   }
-// }
-
-// function mapStateToProps(state){
-//   return{
-//       orgList: state.organizations
-//   }
-// }
-
-// export default connect(mapStateToProps, matchDispatchToProps)(App);
 export default App;

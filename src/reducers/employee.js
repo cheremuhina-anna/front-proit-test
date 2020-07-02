@@ -12,6 +12,11 @@ const Page = {
     listOnPage: []
 }
 
+const Filter = {
+    type: '',
+    filter: ''
+}
+
 export function pageEmployees(state = Page, action) {
     switch (action.type) {
         case 'FETCH_PAGE_EMPLOYEES':
@@ -61,6 +66,15 @@ export function empl(state = Employee, action) {
 export function isActionEmployee(state = false, action) {
     switch(action.type) {
         case 'DELETE_EMPLOYEE':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+export function emplFilter(state = Filter, action) {
+    switch(action.type) {
+        case 'CHANGE_FILTER':
             return action.payload
         default:
             return state

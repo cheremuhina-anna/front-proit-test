@@ -63,3 +63,12 @@ export function isActionOrganization(state = false, action) {
       return state
   }
 }
+
+export function orgFilter(state = '', action) {
+  switch (action.type) {
+    case 'CHANGE_FILTER':
+      return action.payload
+    default:
+      return state
+  }
+}

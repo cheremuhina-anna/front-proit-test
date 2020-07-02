@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 import ReactPaginate from "react-paginate";
 // import { bindActionCreators } from "redux";
 
-import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterListOrg } from '../actions/orgAction'
-import { fetchPageListEmpl, selectEmpl, deleteEmplAPI, fetchFilterListEmpl } from '../actions/emplAction'
+import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterListOrg, changeFilterOrg } from '../actions/orgAction'
+import {
+    fetchPageListEmpl,
+    selectEmpl,
+    deleteEmplAPI,
+    fetchFilterListEmpl,
+    changeFilterEmpl
+} from '../actions/emplAction'
 
 import Table from '../components/table'
 import HeadBody from "../components/head_body";
@@ -32,7 +38,24 @@ class SmartBody extends React.Component {
             currentPage: 0
         }
         this.handlePageClick = this.handlePageClick.bind(this);
+        this.handlePageFilterClick = this.handlePageFilterClick.bind(this);
     }
+
+    handlePageFilterClick = (e) => {
+        console.log();
+        const selectedPage = e.selected;
+        const offset = selectedPage * this.state.limit;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+        }, () => {
+            if (this.props.isOrg)
+                this.props.fetchFilterListOrg(this.props.orgFilter, this.state.offset, this.state.limit)
+            else
+                this.props.fetchFilterListEmpl(this.props.emplFilter.type, this.props.emplFilter.filter, this.state.offset, this.state.limit)
+        });
+
+    };
 
     handlePageClick = (e) => {
         const selectedPage = e.selected;
@@ -64,6 +87,8 @@ class SmartBody extends React.Component {
                         isOrg ={true}
                         fetchFilterList = {this.props.fetchFilterListOrg}
                         fetchList = {this.props.fetchDataOrg}
+                        changeFilter = {this.props.changeFilterOrg}
+                        filter = {this.props.orgFilter}
                         offset = {this.state.offset}
                         limit = {this.state.limit}/>
                     <Table
@@ -84,7 +109,7 @@ class SmartBody extends React.Component {
                         pageCount={Math.ceil(this.props.pageOrganizations.countOrgs / this.state.limit)}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
-                        onPageChange={this.handlePageClick}
+                        onPageChange={this.props.orgFilter === '' ? this.handlePageClick : this.handlePageFilterClick}
                         containerClassName={"pagination"}
                         subContainerClassName={"pages pagination"}
                         activeClassName={"active"}/>
@@ -101,6 +126,8 @@ class SmartBody extends React.Component {
                         isOrg = {false}
                         fetchFilterList = {this.props.fetchFilterListEmpl}
                         fetchList = {this.props.fetchDataEmpl}
+                        changeFilter = {this.props.changeFilterEmpl}
+                        filter = {this.props.emplFilter}
                         offset = {this.state.offset}
                         limit = {this.state.limit}/>
                     <Table
@@ -120,7 +147,7 @@ class SmartBody extends React.Component {
                         pageCount={Math.ceil(this.props.pageEmployees.countEmpls / this.state.limit)}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
-                        onPageChange={this.handlePageClick}
+                        onPageChange={this.props.emplFilter.filter === '' ? this.handlePageClick : this.handlePageFilterClick}
                         containerClassName={"pagination"}
                         subContainerClassName={"pages pagination"}
                         activeClassName={"active"}/>
@@ -139,11 +166,13 @@ function matchDispatchToProps(dispatch) {
         selectOrg: (org) => dispatch(selectOrg(org)),
         deleteDataOrg: (data, offset, limit) => dispatch(deleteOrgAPI(data, offset, limit)),
         fetchFilterListOrg: (filter, offset, limit) => dispatch(fetchFilterListOrg(filter, offset, limit)),
+        changeFilterOrg: (filter) => dispatch(changeFilterOrg(filter)),
 
         fetchDataEmpl: (offset, limit) => dispatch(fetchPageListEmpl(offset, limit)),
         selectEmpl: (empl) => dispatch(selectEmpl(empl)),
         deleteDataEmpl: (data, offset, limit) => dispatch(deleteEmplAPI(data, offset, limit)),
         fetchFilterListEmpl: (type, filter, offset, limit) => dispatch(fetchFilterListEmpl(type, filter, offset, limit)),
+        changeFilterEmpl: (type, filter) => dispatch(changeFilterEmpl(type, filter))
     }
 }
 
@@ -152,11 +181,13 @@ function mapStateToProps(state){
         pageOrganizations: state.pageOrganizations,
         org: state.org,
         isDeleteOrg: state.isActionOrganization,
+        orgFilter: state.orgFilter,
 
         pageEmployees: state.pageEmployees,
         emplList: state.employees,
         empl: state.empl,
-        isDeleteEmpl: state.isActionEmployee
+        isDeleteEmpl: state.isActionEmployee,
+        emplFilter : state.emplFilter
     }
 }
 

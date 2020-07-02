@@ -1,39 +1,3 @@
-/*.treeHTML {*/
-/*    line-height: normal;*/
-/*}*/
-/*.treeHTML details {*/
-/*    display: block;*/
-/*}*/
-/*.treeHTML div {*/
-/*    position: relative;*/
-/*    margin: 0 0 0 .5em;*/
-/*    padding: 0 0 0 1.2em;*/
-/*}*/
-/*.treeHTML div:not(:last-child) { !* необязательно *!*/
-/*    border-left: 1px solid #ccc;*/
-/*}*/
-/*.treeHTML div:before { !* необязательно *!*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 1.1em;*/
-/*    height: .5em;*/
-/*    border-bottom: 1px solid #ccc;*/
-/*}*/
-/*.treeHTML div:last-child:before { !* необязательно *!*/
-/*    border-left: 1px solid #ccc;*/
-/*}*/
-/*.treeHTML summary { !* стилями можно задать любую форму, например, тот же плюс. Я специально не стала усложнять, чтобы можно было проще разобраться в коде *!*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.treeHTML details[open] summary { !* убрать рамку при фокусе *!*/
-/*    outline: none;*/
-/*}*/
-
 .treeCSS,
 .treeCSS ul,
 .treeCSS li {
@@ -69,7 +33,7 @@
 }
 .treeCSS .drop {
     position: absolute;
-    left: -.5em;
+    left: -.10em;
     top: .4em; /* .2em (font-size: 80%;) + .2em (padding из .treeCSS li li) */
     width: .9em;
     height: .9em;

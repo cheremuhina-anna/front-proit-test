@@ -157,3 +157,13 @@ export const clearEmpl = () => {
         payload: Employee
     }
 }
+
+export const changeFilterEmpl = (type, filter) => {
+    return {
+        type: 'CHANGE_FILTER',
+        payload: {
+            type: type,
+            filter: filter
+        }
+    }
+}

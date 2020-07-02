@@ -140,3 +140,10 @@ export const clearOrg = () => {
         payload: Organization
     }
 }
+
+export const changeFilterOrg = (filter) => {
+    return {
+        type: 'CHANGE_FILTER',
+        payload: filter
+    }
+}
