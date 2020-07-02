@@ -70,7 +70,8 @@ export const fetchTreeOrgSuccess = (treeList) => {
 
 export const fetchFilterList = (filter, list) => {
     alert(filter)
-    return(dispatch) => fetchListOrgSuccess(list.filter((item,filter)=>(~item.name.indexOf(filter))))
+    list.forEach(x=>alert(x));
+    return fetchPageOrgSuccess({countOrgs: 10, listOnPage: list.filter((item,filter)=>(~item.name.indexOf(filter)))})
 }
 
 export const createOrg = (org) => {

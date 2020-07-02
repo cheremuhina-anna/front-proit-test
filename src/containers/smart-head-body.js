@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { useHistory} from "react-router-dom";
 
 import {clearOrg, fetchFilterList } from "../actions/orgAction"
+import HeadBody from "../components/head_body";
 
 function UseButtonCreate({
-    clear=()=>{}
-}) {
+                             clear=()=>{}
+                         }) {
     let history = useHistory();
 
     function handleClick() {
@@ -19,7 +20,7 @@ function UseButtonCreate({
     );
 }
 
-class HeadBody extends React.Component {
+class SmartHeadBody extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -33,21 +34,8 @@ class HeadBody extends React.Component {
 
     render(){
         return (
-            <div>
-                {/* <select>
-                    <option>Список</option>
-                    <option>Дерево</option>
-                </select> */}
-                <UseButtonCreate clear = {this.props.clearOrg}/>   
-                <label>
-                    Фильтр:
-                    <input
-                        value = {this.state.filter}
-                        onChange = {this.handleInputChange} />
-                </label>
-                <button onClick={()=>this.props.fetchFilterList(this.state.filter, this.props.pageOrganizations)}>Найти</button>
+<HeadBody
 
-            </div>
         );
     }
 }
@@ -68,4 +56,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(HeadBody)
+export default connect(mapStateToProps, matchDispatchToProps)(SmartHeadBody)
