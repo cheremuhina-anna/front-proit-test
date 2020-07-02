@@ -12,7 +12,7 @@ function UseButtonCreate({
     }
 
     return(
-        <button type="button" onClick={handleClick}>Добавить</button>
+        <button  className={'btn btn-success'} type="button" onClick={handleClick}>Добавить</button>
     );
 }
 
@@ -82,21 +82,34 @@ class HeadBody extends React.Component {
                 {/*    <option>Список</option>*/}
                 {/*    <option>Дерево</option>*/}
                 {/*</select>*/}
-                <UseButtonCreate clear = {this.props.clearOrg}/>   
-                <label>
-                    Фильтр:
-                    <input
-                        id = 'input-filter'
-                        value = { this.props.isOrg ? this.props.filter : this.props.filter.filter}
-                        onChange = {this.handleInputChange} />
-                </label>
-                <select id='select-filter-for-empl' hidden={this.props.isOrg} onChange={this.handleSelectChange}>
-                    <option value={'name'}>ФИО</option>
-                    <option value={'org'}>Организация</option>
-                </select>
-                {/*<button onClick={()=>this.props.fetchFilterList(document.getElementById('select-filter-for-empl').value, this.state.filter, this.props.offset, this.props.limit)}>Найти</button>*/}
-                <button onClick={this.handleFilterClick}>Найти</button>
-                <button onClick={this.handleDropClick}>Сброс</button>
+                <div className={'container p-5'}>
+                    <div className={'row'}>
+                        <div className={'col input-group mb-3'}>
+                            <div className="input-group-prepend">
+                                <span className={'input-group-text'}  id="basic-addon1">Фильтр:</span>
+                            </div>
+                                <input
+                                        id = 'input-filter'
+                                        className={'form-control'}
+                                        value = { this.props.isOrg ? this.props.filter : this.props.filter.filter}
+                                        onChange = {this.handleInputChange}
+                                        aria-describedby="basic-addon1"/>
+
+
+                            <select id='select-filter-for-empl' className={'custom-select'} hidden={this.props.isOrg} onChange={this.handleSelectChange}>
+                                <option value={'name'}>ФИО</option>
+                                <option value={'org'}>Организация</option>
+                            </select>
+                            <div class="input-group-append">
+                                <button className={'btn btn-primary'} onClick={this.handleFilterClick}>Найти</button>
+                                <button className={'btn btn-secondary'} onClick={this.handleDropClick}>Сброс</button>
+                            </div>
+                        </div>
+                        <div className={'col-2'}>
+                            <UseButtonCreate clear = {this.props.clearOrg}/>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

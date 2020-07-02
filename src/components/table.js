@@ -16,7 +16,7 @@ function UseButtonUpdate({
   }
 
   return(
-      <button type="button" onClick={handleClick}>Изменить</button>
+      <button type="button" className={'btn btn-primary'} onClick={handleClick}>Изменить</button>
   );
 }
 
@@ -36,7 +36,7 @@ function ButtonDelete({
   }
 
   return(
-      <button type="button" onClick={handleClick}>Удалить</button>
+      <button type="button" className={'btn btn-danger'} onClick={handleClick}>Удалить</button>
   );
 }
 
@@ -68,27 +68,30 @@ class Table extends React.Component {
         </label>
         <button onClick={this.handleSearchClick}>Найти</button>
         <br /> */}
-          <table border="1">
+          <table class="table table-hover text-center" border="1">
             <caption>Список {this.props.thList.capt}</caption>
-            <thead>
+            <thead class="thead-light">
             <tr>
-              <th>№</th>
-              <th>{this.props.thList.th1}</th>
-              <th>{this.props.thList.th2}</th>
-              <th>{this.props.thList.th3}</th>
+              {/*<th>№</th>*/}
+              <th scope="col">{this.props.thList.th1}</th>
+              <th scope="col">{this.props.thList.th2}</th>
+              <th scope="col">{this.props.thList.th3}</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             {this.props.list.map(item => {
               return (
                   <tr key={item.id}>
-                    <td>0</td>
+                    {/*<td>0</td>*/}
                     <td>{item.name}</td>
                     <td>{'nameHeadorg' in item? item.nameHeadorg : item.nameOrg}</td>
                     <td>{'countEmpl' in item? item.countEmpl: item.nameHeadempl}</td>
                     <td>
+                        <div className={'btn-group'}>
                       <UseButtonUpdate select = {this.props.select} element={item}/>
                       <ButtonDelete id = {item.id} offset={this.props.offset} limit={this.props.limit} countEmpl = {'countEmpl' in item? item.countEmpl: null}  deleteElement = {this.props.delete} isDel = {this.props.isDelete}/>
+                        </div>
                     </td>
                   </tr>
               );})

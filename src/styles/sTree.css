@@ -5,6 +5,7 @@
     padding: 0;
     line-height: 1;
     list-style: none;
+    font-size: 18pt;
 }
 .treeCSS ul {
     margin: 0 0 0 .5em; /* вести линию вниз где-то с полбуквы родителя */

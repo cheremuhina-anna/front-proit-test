@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import ReactPaginate from "react-paginate";
+import 'bootstrap/dist/css/bootstrap.min.css'
 // import { bindActionCreators } from "redux";
 
 import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterListOrg, changeFilterOrg } from '../actions/orgAction'
@@ -82,7 +83,7 @@ class SmartBody extends React.Component {
     render() {
         if(this.props.isOrg)
             return(
-                <div>
+                <div className={'container'}>
                     <HeadBody
                         isOrg ={true}
                         fetchFilterList = {this.props.fetchFilterListOrg}
@@ -101,27 +102,27 @@ class SmartBody extends React.Component {
                         isDelete = {this.props.isDeleteOrg}
                         fetchList = {this.props.fetchDataOrg}
                         fetchFilterList = {this.props.fetchFilterList}/>
+                    <div className={'row justify-content-center'}>
                     <ReactPaginate
                         previousLabel={"prev"}
                         nextLabel={"next"}
                         breakLabel={"..."}
-                        breakClassName={"break-me"}
                         pageCount={Math.ceil(this.props.pageOrganizations.countOrgs / this.state.limit)}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
                         onPageChange={this.props.orgFilter === '' ? this.handlePageClick : this.handlePageFilterClick}
                         containerClassName={"pagination"}
-                        subContainerClassName={"pages pagination"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={'page-link'}
+                        previousClassName={'page-link'}
+                        nextClassName={'page-link'}
                         activeClassName={"active"}/>
-                    {/*<Pagination*/}
-                    {/*    count = {this.props.pageOrganizations.countOrgs}*/}
-                    {/*    fetchData = {this.props.fetchDataOrg}*/}
-                    {/*/>*/}
+                    </div>
                 </div>
             );
         else
             return(
-                <div>
+                <div className={'container'}>
                     <HeadBody
                         isOrg = {false}
                         fetchFilterList = {this.props.fetchFilterListEmpl}
@@ -139,22 +140,22 @@ class SmartBody extends React.Component {
                         limit = {this.state.limit}
                         isDelete = {this.props.isDeleteEmpl}
                         fetchList = {this.props.fetchDataEmpl}/>
+                     <div className={'row justify-content-center'}>
                     <ReactPaginate
                         previousLabel={"prev"}
                         nextLabel={"next"}
                         breakLabel={"..."}
-                        breakClassName={"break-me"}
                         pageCount={Math.ceil(this.props.pageEmployees.countEmpls / this.state.limit)}
                         marginPagesDisplayed={2}
                         pageRangeDisplayed={5}
                         onPageChange={this.props.emplFilter.filter === '' ? this.handlePageClick : this.handlePageFilterClick}
                         containerClassName={"pagination"}
-                        subContainerClassName={"pages pagination"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={'page-link'}
+                        previousClassName={'page-link'}
+                        nextClassName={'page-link'}
                         activeClassName={"active"}/>
-                    {/*<Pagination*/}
-                    {/*    count = {this.props.pageEmployees.countEmpls}*/}
-                    {/*    fetchData = {this.props.fetchDataEmpl}*/}
-                    {/*/>*/}
+                     </div>
                 </div>
             );
     }

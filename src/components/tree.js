@@ -37,11 +37,15 @@ class TreeView extends React.Component {
 
     render() {
         return (
+            <div className={'container'} >
+                <div className={'row'}>
             <ul className="treeCSS">
                 {this.props.tree.map(node =>
                     <Node item = {node}/>
                 )}
             </ul>
+            </div>
+            </div>
         );
     }
 }
