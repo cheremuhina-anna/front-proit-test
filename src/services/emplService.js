@@ -10,6 +10,14 @@ class EmplService {
             }});
     };
 
+    getPageFilterList = (type, filter, offset, limit) => {
+        return apiEmpl.get(`/${type}/${filter}`,{
+            params: {
+                offset: offset,
+                limit: limit
+            }});
+    }
+
     getTree = () => {
         return apiEmpl.get('/tree')
     }

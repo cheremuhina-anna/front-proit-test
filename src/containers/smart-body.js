@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import ReactPaginate from "react-paginate";
 // import { bindActionCreators } from "redux";
 
-import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterList } from '../actions/orgAction'
-import { fetchPageListEmpl, selectEmpl, deleteEmplAPI } from '../actions/emplAction'
+import { fetchPageListOrg, selectOrg, deleteOrgAPI, fetchFilterListOrg } from '../actions/orgAction'
+import { fetchPageListEmpl, selectEmpl, deleteEmplAPI, fetchFilterListEmpl } from '../actions/emplAction'
 
 import Table from '../components/table'
+import HeadBody from "../components/head_body";
 
 const thListOrg = {
     capt:'организаций',
@@ -22,7 +23,7 @@ const thListEmpl = {
     th3: 'Руководитель'
 }
 
-class SmartTable extends React.Component {
+class SmartBody extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -59,6 +60,12 @@ class SmartTable extends React.Component {
         if(this.props.isOrg)
             return(
                 <div>
+                    <HeadBody
+                        isOrg ={true}
+                        fetchFilterList = {this.props.fetchFilterListOrg}
+                        fetchList = {this.props.fetchDataOrg}
+                        offset = {this.state.offset}
+                        limit = {this.state.limit}/>
                     <Table
                         thList = {thListOrg}
                         list = {this.props.pageOrganizations.listOnPage}
@@ -90,6 +97,12 @@ class SmartTable extends React.Component {
         else
             return(
                 <div>
+                    <HeadBody
+                        isOrg = {false}
+                        fetchFilterList = {this.props.fetchFilterListEmpl}
+                        fetchList = {this.props.fetchDataEmpl}
+                        offset = {this.state.offset}
+                        limit = {this.state.limit}/>
                     <Table
                         thList = {thListEmpl}
                         list = {this.props.pageEmployees.listOnPage}
@@ -125,11 +138,12 @@ function matchDispatchToProps(dispatch) {
         fetchDataOrg: (offset, limit) => dispatch(fetchPageListOrg(offset, limit)),
         selectOrg: (org) => dispatch(selectOrg(org)),
         deleteDataOrg: (data, offset, limit) => dispatch(deleteOrgAPI(data, offset, limit)),
-        fetchFilterList: (filter, list) => dispatch(fetchFilterList(filter, list)),
+        fetchFilterListOrg: (filter, offset, limit) => dispatch(fetchFilterListOrg(filter, offset, limit)),
 
         fetchDataEmpl: (offset, limit) => dispatch(fetchPageListEmpl(offset, limit)),
         selectEmpl: (empl) => dispatch(selectEmpl(empl)),
         deleteDataEmpl: (data, offset, limit) => dispatch(deleteEmplAPI(data, offset, limit)),
+        fetchFilterListEmpl: (type, filter, offset, limit) => dispatch(fetchFilterListEmpl(type, filter, offset, limit)),
     }
 }
 
@@ -146,4 +160,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(SmartTable)
+export default connect(mapStateToProps, matchDispatchToProps)(SmartBody)

@@ -4,8 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Header from "./components/header"
-import HeadBody from "./components/head_body"
-import Table from "./containers/smart-table"
+import Body from "./containers/smart-body"
 import SmartCreate from "./containers/smart-create"
 import TreeView from "./containers/smart-tree";
 //  import CreateEmpl from "./components/createEmpl"
@@ -27,14 +26,12 @@ class App extends React.Component {
         <Router>
           <Route><Header/></Route>             
           <Route>              
-              <Route exact path="/organization"> 
-                <HeadBody />
-                <Table isOrg={true}/>
+              <Route exact path="/organization">
+                <Body isOrg={true}/>
                 {/* <Table requestAddress='http://localhost:54545/organization' capt='организаций' th1='Название организации' th2='Головная организация' th3='Количество сотрудников' />  */}
               </Route>
               <Route exact path="/employee">
-                <HeadBody />
-                <Table isOrg={false}/>
+                <Body isOrg={false}/>
                 {/* <Table requestAddress='http://localhost:54545/employee' capt='сотрудников' th1='ФИО' th2 = 'Организация' th3 ='Руководитель' /> */}
               </Route>
           </Route>

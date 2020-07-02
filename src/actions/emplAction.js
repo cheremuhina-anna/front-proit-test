@@ -24,6 +24,14 @@ export const fetchPageListEmpl = (offset, limit) =>{
     }
 }
 
+export const fetchFilterListEmpl = (type, filter, offset, limit) => {
+    return (dispatch) => {
+        EmplService.getPageFilterList(type, filter, offset, limit)
+            .then(response => response.data)
+            .then(result => dispatch(fetchPageEmplSuccess(result)))
+    }
+}
+
 export const fetchTreeEmpl = () =>{
     return (dispatch) =>{
         EmplService.getTree()

@@ -1,8 +1,5 @@
 import React from "react";
-import { connect } from 'react-redux'
 import { useHistory} from "react-router-dom";
-
-import {clearOrg, fetchFilterList } from "../actions/orgAction"
 
 function UseButtonCreate({
     clear=()=>{}
@@ -25,10 +22,20 @@ class HeadBody extends React.Component {
         this.state = {
             filter: ''
         }
+        this.handleFilterClick = this.handleFilterClick.bind(this);
     }
 
     handleInputChange = (event) => {
         this.setState({filter: event.target.value});
+    }
+
+    handleFilterClick = () => {
+        if (this.state.filter === '') alert("Введите фильтр для поиска!");
+        else
+        {
+            let sel = document.getElementById('select-filter-for-empl');
+            this.props.fetchFilterList(sel.value, this.state.filter, this.props.offset, this.props.limit)
+        }
     }
 
     render(){
@@ -45,27 +52,17 @@ class HeadBody extends React.Component {
                         value = {this.state.filter}
                         onChange = {this.handleInputChange} />
                 </label>
-                <button onClick={()=>this.props.fetchFilterList(this.state.filter, this.props.pageOrganizations)}>Найти</button>
-
+                <select id='select-filter-for-empl' hidden={this.props.isOrg}>
+                    <option value={'name'}>ФИО</option>
+                    <option value={'org'}>Организация</option>
+                </select>
+                {/*<button onClick={()=>this.props.fetchFilterList(document.getElementById('select-filter-for-empl').value, this.state.filter, this.props.offset, this.props.limit)}>Найти</button>*/}
+                <button onClick={this.handleFilterClick}>Найти</button>
+                <button onClick={()=>this.props.fetchList(this.props.offset, this.props.limit)}>Сброс</button>
             </div>
         );
     }
 }
 
-function matchDispatchToProps(dispatch) {
-    return {
-        clearOrg: () => dispatch(clearOrg()),
-        fetchFilterList: (filter, list) => dispatch(fetchFilterList(filter, list))
-    }
-}
 
-function mapStateToProps(state){
-    return{
-        org: state.org,
-        pageOrganizations: state.pageOrganizations,
-
-        empl: state.empl,
-    }
-}
-
-export default connect(mapStateToProps, matchDispatchToProps)(HeadBody)
+export default HeadBody

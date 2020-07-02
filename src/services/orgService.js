@@ -21,6 +21,14 @@ class OrgService {
             }});
     };
 
+    getPageFilterList = (filter, offset, limit) => {
+        return apiOrg.get(`/${filter}`,{
+            params: {
+                offset: offset,
+                limit: limit
+            }});
+    }
+
     getTree = () => {
         return apiOrg.get('/tree')
     };
